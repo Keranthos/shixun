@@ -1,0 +1,5880 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "默认模块",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "summary": "注册",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "description": "用户名",
+                    "example": "{{$person.fullName}}",
+                    "type": "string"
+                  },
+                  "email": {
+                    "description": "邮箱",
+                    "example": "{{$internet.email}}",
+                    "type": "string"
+                  },
+                  "password": {
+                    "description": "密码",
+                    "example": "{{$string.nanoid(min=6,max=10)}}",
+                    "type": "string"
+                  },
+                  "email_password": {
+                    "description": "邮箱验证码",
+                    "example": "{{$string.numeric(length=4)}}",
+                    "type": "string"
+                  },
+                  "certify_password": {
+                    "description": "邀请码",
+                    "example": "{{$string.numeric(length=8)}}{{$string.numeric(length=4)}}",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "email",
+                  "password",
+                  "email_password",
+                  "certify_password"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "返还信息"
+                    },
+                    "JWT token": {
+                      "description": "用户号",
+                      "$ref": "#/components/schemas/user"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "JWT token"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "登陆",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username_or_email": {
+                    "description": "用户账号或用户名",
+                    "example": "{{$internet.email}}",
+                    "type": "string"
+                  },
+                  "password": {
+                    "description": "账户密码",
+                    "example": "{{$internet.password(length=6)}}",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username_or_email",
+                  "password"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "default": "1"
+                    },
+                    "JWT token": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "JWT token"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/auth/forgot-password": {
+      "post": {
+        "summary": "忘记密码",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "description": "邮件名",
+                    "example": "",
+                    "type": "string"
+                  },
+                  "new_password": {
+                    "example": "",
+                    "type": "string"
+                  },
+                  "certify_password": {
+                    "description": "邀请码",
+                    "example": "",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email",
+                  "new_password",
+                  "certify_password"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "title": "返还消息"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                },
+                "example": {
+                  "message": "密码重置链接已发送"
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "summary": "登出",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "title": "消息"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/users/profile": {
+      "get": {
+        "summary": "个人资料",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "用户登陆后的token",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "username": {
+                      "type": "string",
+                      "description": "用户名"
+                    },
+                    "nickname": {
+                      "type": "string",
+                      "description": "昵称"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "个人邮箱"
+                    },
+                    "avater": {
+                      "type": "string",
+                      "description": "头像地址"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "个人动态描述"
+                    },
+                    "face_photo": {
+                      "type": "string",
+                      "description": "封面地址"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "username",
+                    "nickname",
+                    "email",
+                    "avater",
+                    "description",
+                    "face_photo"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/users/status": {
+      "get": {
+        "summary": "审核状态",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "用户登录后的token",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "resources": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/resource_review"
+                      }
+                    },
+                    "tools": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tool_review"
+                      }
+                    },
+                    "teaches": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/teach_review"
+                      }
+                    }
+                  },
+                  "required": [
+                    "resources",
+                    "teaches",
+                    "tools",
+                    "message"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/users/collection": {
+      "get": {
+        "summary": "个人收藏",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "用户登陆后的token",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "resources": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/resource_personal"
+                      }
+                    },
+                    "tools": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tool_personal"
+                      }
+                    },
+                    "teaches": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/teach_personal"
+                      }
+                    }
+                  },
+                  "required": [
+                    "resources",
+                    "tools",
+                    "teaches",
+                    "message"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/users/update": {
+      "post": {
+        "summary": "资料更新",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "用户登录后的token",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nickname": {
+                    "description": "昵称",
+                    "example": "{{$person.fullName}}",
+                    "type": "string"
+                  },
+                  "avater": {
+                    "description": "头像地址",
+                    "example": "{{$system.filePath}}",
+                    "type": "string"
+                  },
+                  "description": {
+                    "description": "个人介绍",
+                    "example": "{{$lorem.sentence}}",
+                    "type": "string"
+                  },
+                  "face_photo": {
+                    "description": "封面图片",
+                    "example": "{{$system.filePath}}",
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/users_pro"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "user"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/users/collection/{resourceType}/{resourceId}/": {
+      "delete": {
+        "summary": "更新收藏（取消）",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "resourceType",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resourceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "用户登录后的token",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "resources": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/resource_personal"
+                      }
+                    },
+                    "tools": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tool_personal"
+                      }
+                    },
+                    "teaches": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/teach_personal"
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "resources",
+                    "tools",
+                    "teaches"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/users/summit": {
+      "get": {
+        "summary": "个人提交",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "用户登录后的token",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "resources": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/resource_personal"
+                      }
+                    },
+                    "tools": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tool_personal"
+                      }
+                    },
+                    "teaches": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/teach_personal"
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "resources",
+                    "tools",
+                    "teaches"
+                  ]
+                },
+                "example": {
+                  "type": "object",
+                  "properties": {
+                    "resources": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/213100102"
+                      }
+                    },
+                    "tools": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/213100103"
+                      }
+                    },
+                    "teaches": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/definitions/213100112"
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "resources",
+                    "tools",
+                    "teaches",
+                    "message"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/users/status/{resourceType}/{resourceId}/statu": {
+      "put": {
+        "summary": "用户个人管理发帖",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "resourceType",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resourceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "用户登录后的token",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "example": "取消发布",
+                    "type": "string"
+                  },
+                  "state": {
+                    "example": "说明取消原因",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "manipulate": {
+                      "$ref": "#/components/schemas/maneuver"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "manipulate"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          },
+          "404": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "",
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "string",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/users/profile/new_email": {
+      "post": {
+        "summary": "邮箱更新",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "用户名",
+                    "example": "",
+                    "type": "string"
+                  },
+                  "password": {
+                    "description": "密码",
+                    "example": "{{$internet.password}}",
+                    "type": "string"
+                  },
+                  "new_email": {
+                    "description": "新邮箱",
+                    "example": "{{$internet.email}}",
+                    "type": "string"
+                  },
+                  "code": {
+                    "description": "邀请码",
+                    "example": "{{$string.numeric(length=4)}}",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "password",
+                  "new_email",
+                  "code"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "user"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/users/profile/new_password": {
+      "post": {
+        "summary": "密码更新",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "用户名",
+                    "example": "",
+                    "type": "string"
+                  },
+                  "email": {
+                    "description": "邮箱",
+                    "example": "{{$internet.email}}",
+                    "type": "string"
+                  },
+                  "new_password": {
+                    "description": "新密码",
+                    "example": "{{$internet.password}}",
+                    "type": "string"
+                  },
+                  "code": {
+                    "description": "邀请码",
+                    "example": "",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "email",
+                  "new_password",
+                  "code"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/user"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "user"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/tools/profile": {
+      "get": {
+        "summary": "工具列表",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "catagory",
+            "in": "query",
+            "description": "分类筛选",
+            "required": false,
+            "example": [
+              "论文阅读",
+              "软件开发",
+              "协作与沟通",
+              "个人提升"
+            ],
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "tag",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": [
+              "免费",
+              "AI工具"
+            ],
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "{{$helpers.arrayElement(['按发布时间先后','按浏览量','按点赞量'])}}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "上一页的最后一条工具ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "一页有多少条数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tool_return"
+                      },
+                      "minItems": 2
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/tools/search": {
+      "get": {
+        "summary": "工具搜索",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "搜索关键词",
+            "required": true,
+            "example": "{{$word.noun}}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "上一页最后一个工具的id",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "每页展示条目",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "resourceType",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "工具",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "messages": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/tool_return"
+                      },
+                      "minItems": 2
+                    }
+                  },
+                  "required": [
+                    "messages",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/tools/{resourceId}": {
+      "get": {
+        "summary": "获取工具",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resourceType",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "系统工具",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/tool_detail"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/tools/submit": {
+      "post": {
+        "summary": "工具提交",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "认证token",
+            "required": true,
+            "example": "{{$string.alphanumeric(min=20,max=24)}}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "工具名称",
+                    "example": "变电站技术室",
+                    "type": "string"
+                  },
+                  "link": {
+                    "description": "工具访问链接",
+                    "example": "https://www.doubao.com/",
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "工具介绍（简绍20-50字）",
+                    "example": "{{$lorem.sentence}}"
+                  },
+                  "description_detail": {
+                    "description": "工具介绍（详细介绍50-100字）",
+                    "example": "{{$lorem.sentences}}",
+                    "type": "string"
+                  },
+                  "catagory": {
+                    "description": "工具类别（选项分类）",
+                    "example": "",
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "标签（限定5个，每个限定10个字）",
+                    "example": [
+                      ""
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "link",
+                  "description",
+                  "description_detail",
+                  "catagory",
+                  "tags"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/tool_review"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/tools/{resourceId}/views": {
+      "post": {
+        "summary": "工具观看",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "views": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "views"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/tools/{resourceId}/collections": {
+      "post": {
+        "summary": "工具页面收藏",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resourceType",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "系统工具",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "用户token",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "messages": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "collections": {
+                          "type": "integer"
+                        },
+                        "iscollected": {
+                          "type": "boolean",
+                          "description": "未登录则NULL，已登录则变化",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "collections",
+                        "iscollected"
+                      ],
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "messages",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "工具页面收藏取消",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resourceType",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "系统工具",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "用户token",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "messages": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "collections": {
+                          "type": "integer"
+                        },
+                        "iscollected": {
+                          "type": "boolean",
+                          "description": "未登录则NULL，已登录则变化",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "collections",
+                        "iscollected"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "messages",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/tools/{resourceId}/comments": {
+      "post": {
+        "summary": "工具评论",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resourceType",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "系统工具",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "认证的token",
+            "required": true,
+            "example": "{{$string.alphanumeric(min=17,max=20)}}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "description": "评论（规定不超过800）",
+                    "example": "{{$lorem.sentence}}",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "content"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "com": {
+                      "type": "object",
+                      "properties": {
+                        "comment_Id": {
+                          "type": "integer",
+                          "description": "评论用户的序列号"
+                        },
+                        "nickname": {
+                          "type": "string",
+                          "description": "评论用户的昵称"
+                        },
+                        "avater": {
+                          "type": "string",
+                          "description": "评论用户头像"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "评论详情"
+                        },
+                        "commentDate": {
+                          "type": "string",
+                          "description": "评论时间"
+                        },
+                        "love_count": {
+                          "type": "integer",
+                          "description": "点赞数"
+                        },
+                        "reply_total": {
+                          "type": "integer",
+                          "description": "回复总数"
+                        },
+                        "replies": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/tool_comment"
+                          }
+                        }
+                      },
+                      "required": [
+                        "comment_Id",
+                        "nickname",
+                        "avater",
+                        "comment",
+                        "commentDate",
+                        "love_count",
+                        "reply_total",
+                        "replies"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "com"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除评论",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "用户返回的token",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "commentId": {
+                          "type": "integer",
+                          "description": "评论用户的序列号"
+                        },
+                        "nickname": {
+                          "type": "string",
+                          "description": "评论用户的昵称"
+                        },
+                        "avater": {
+                          "type": "string",
+                          "description": "评论用户头像"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "评论详情"
+                        },
+                        "delete_Date": {
+                          "type": "string",
+                          "description": "评论时间"
+                        }
+                      },
+                      "required": [
+                        "commentId",
+                        "nickname",
+                        "avater",
+                        "comment",
+                        "delete_Date"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/tools/{resourceId}/comments/{commentId}/reply": {
+      "post": {
+        "summary": "回复评论",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resourceType",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "系统工具",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "用户token",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "description": "回复评论，不超过800字",
+                    "example": "{{$lorem.paragraphs}}",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "content"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/tool_comment"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除评论回复",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "用户的token",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "comment_Id": {
+                          "type": "integer",
+                          "description": "评论用户的序列号"
+                        },
+                        "nickname": {
+                          "type": "string",
+                          "description": "评论用户的昵称"
+                        },
+                        "avater": {
+                          "type": "string",
+                          "description": "评论用户头像"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "评论详情"
+                        },
+                        "delete_Date": {
+                          "type": "string",
+                          "description": "评论时间"
+                        }
+                      },
+                      "required": [
+                        "comment_Id",
+                        "nickname",
+                        "avater",
+                        "comment",
+                        "delete_Date"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/tools/{resourceId}/like": {
+      "post": {
+        "summary": "工具点赞",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "isliked": {
+                          "type": "boolean"
+                        },
+                        "likes": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "isliked",
+                        "likes"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "取消点赞",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "resourceId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "isliked": {
+                          "type": "boolean"
+                        },
+                        "likes": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "isliked",
+                        "likes"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/courses/profile": {
+      "get": {
+        "summary": "课程主页",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "semester",
+            "in": "query",
+            "description": "学期过滤，如大一下（左侧栏点击自动筛选）",
+            "required": false,
+            "example": "{{$helpers.arrayElement(['大一上','大一下','大二上','大二下','大三上','大三下','大四上','大四下'])}}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "（支持标签类别，我们的标签设置打算设为2个必选标签，标注学期和类型，后续三个用以标注这门课的投稿者评价）点击筛选，在主页的时候默认筛选情况为大一同学，而页内筛选默认为按照时间序列排序",
+            "required": false,
+            "example": [
+              "公必",
+              "专必",
+              "专选",
+              "有签到"
+            ],
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "name_asc（名称升序）、name_desc（名称降序）、credit_desc（学分降序），默认按创建时间降序",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "每一页的限制条目数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "滑动换页，本页最后一条课程的id",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "resourceType",
+            "in": "query",
+            "description": "该资源类型",
+            "required": false,
+            "example": "课程",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "courses_agg": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/course_return"
+                      },
+                      "minItems": 2
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "courses_agg"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/courses/search": {
+      "get": {
+        "summary": "课程搜索",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "搜索关键词（至少匹配教师，课程，标签其中一项,支持精确和模糊）",
+            "required": true,
+            "example": "{{$vehicle.vehicle}}",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "（支持标签类别，我们的标签设置打算设为2个必选标签，标注学期和类型，后续三个用以标注这门课的投稿者评价）点击筛选，在主页的时候默认筛选情况为大一同学，而页内筛选默认为按照时间序列排序",
+            "required": false,
+            "example": [
+              "公必",
+              "专必",
+              "专选",
+              "有签到"
+            ],
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "每一页的限制条目数",
+            "required": false,
+            "example": 0,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "滑动换页，本页最后一条课程的id",
+            "required": false,
+            "example": 0,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "resourceType",
+            "in": "query",
+            "description": "该资源类型",
+            "required": false,
+            "example": "课程",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "courses_agg": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/course_return"
+                      },
+                      "minItems": 2
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "courses_agg"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/courses/{courseId}": {
+      "get": {
+        "summary": "课程内容",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "resourceType",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "课程系统",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "courses": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/course_detail"
+                      },
+                      "minItems": 1,
+                      "maxItems": 1
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "courses"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/courses/{courseId}/upload": {
+      "post": {
+        "summary": "上传资源",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "description": "课程编号",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "resourceType",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "example": "课程系统",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "用户的token序列",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "format": "binary",
+                    "type": "string",
+                    "description": "课程的课本资源文件（可以用户上传）",
+                    "example": ""
+                  },
+                  "resource": {
+                    "description": "课程的学习资源（网课，链接访问等）",
+                    "example": "{{$internet.url}}",
+                    "type": "string"
+                  },
+                  "description": {
+                    "description": "尽量不超过20字",
+                    "example": "{{$lorem.sentence}}",
+                    "type": "string"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "自行设计",
+                    "example": ""
+                  }
+                },
+                "required": [
+                  "description"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/teach_review"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/courses/{courseId}/textbooks/{textbookId}/download": {
+      "get": {
+        "summary": "下载课本",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "textbookId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "要求登录才可以下载",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "content": {
+                      "type": "string",
+                      "description": "课本"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "content"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/courses/{courseId}/comments": {
+      "post": {
+        "summary": "发表评论",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "用户token",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "description": "用户评论内容，在800字内",
+                    "example": "{{$lorem.sentences}}",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "content"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "comment_Id": {
+                          "type": "integer",
+                          "description": "评论用户的序列号"
+                        },
+                        "nickname": {
+                          "type": "string",
+                          "description": "评论用户的昵称"
+                        },
+                        "avater": {
+                          "type": "string",
+                          "description": "评论用户头像"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "评论详情"
+                        },
+                        "commentDate": {
+                          "type": "string",
+                          "description": "评论时间"
+                        },
+                        "love_count": {
+                          "type": "integer",
+                          "description": "点赞人数"
+                        },
+                        "reply_total": {
+                          "type": "integer",
+                          "description": "收录回复总数（为子节点该数目加起来）"
+                        },
+                        "replies": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/course_comment"
+                          },
+                          "description": "没有回复时允许为NULL"
+                        }
+                      },
+                      "required": [
+                        "comment_Id",
+                        "nickname",
+                        "avater",
+                        "comment",
+                        "commentDate",
+                        "love_count",
+                        "reply_total",
+                        "replies"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除评论",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "commentId": {
+                          "type": "integer",
+                          "description": "评论用户的序列号，父节点没了子节点也就没了"
+                        },
+                        "nickname": {
+                          "type": "string",
+                          "description": "评论用户的昵称"
+                        },
+                        "avater": {
+                          "type": "string",
+                          "description": "评论用户头像"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "评论详情"
+                        },
+                        "delete_Date": {
+                          "type": "string",
+                          "description": "评论时间"
+                        }
+                      },
+                      "required": [
+                        "commentId",
+                        "nickname",
+                        "avater",
+                        "comment",
+                        "delete_Date"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/courses/{courseId}/comments/{commentId}/reply": {
+      "post": {
+        "summary": "回复评论",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "用户Token",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "description": "用户回复，800字内",
+                    "example": "{{$lorem.sentences}}",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "content"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "commentId": {
+                          "type": "integer",
+                          "description": "评论用户的序列号"
+                        },
+                        "nickname": {
+                          "type": "string",
+                          "description": "评论用户的昵称"
+                        },
+                        "avater": {
+                          "type": "string",
+                          "description": "评论用户头像"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "评论详情"
+                        },
+                        "commentDate": {
+                          "type": "string",
+                          "description": "评论时间"
+                        },
+                        "isreply": {
+                          "type": "boolean",
+                          "description": "判断是否为回复"
+                        },
+                        "reply_id": {
+                          "type": "string",
+                          "description": "判断是否有回复Id，刚发表时默认为false"
+                        },
+                        "replies": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/course_comment"
+                          },
+                          "description": "没有回复时允许为NULL",
+                          "nullable": true
+                        }
+                      },
+                      "required": [
+                        "commentId",
+                        "nickname",
+                        "avater",
+                        "comment",
+                        "commentDate",
+                        "isreply",
+                        "reply_id",
+                        "replies"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除评论回复",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "commentId": {
+                          "type": "integer",
+                          "description": "评论用户的序列号，两种情况，父节点消失或子节点消失"
+                        },
+                        "nickname": {
+                          "type": "string",
+                          "description": "评论用户的昵称"
+                        },
+                        "avater": {
+                          "type": "string",
+                          "description": "评论用户头像"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "评论详情"
+                        },
+                        "delete_Date": {
+                          "type": "string",
+                          "description": "评论时间"
+                        }
+                      },
+                      "required": [
+                        "commentId",
+                        "nickname",
+                        "avater",
+                        "comment",
+                        "delete_Date"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/courses/{courseId}/view": {
+      "post": {
+        "summary": "课程观看",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "views": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "views"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/courses/{courseId}/collected": {
+      "post": {
+        "summary": "课程收藏",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "iscollected": {
+                          "type": "boolean"
+                        },
+                        "collections": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "iscollected",
+                        "collections"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "课程收藏取消",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "iscollected": {
+                          "type": "boolean"
+                        },
+                        "collections": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "iscollected",
+                        "collections"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/courses/{courseId}/like": {
+      "post": {
+        "summary": "课程点赞",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "isliked": {
+                          "type": "boolean"
+                        },
+                        "likes": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "isliked",
+                        "likes"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "课程取消点赞",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "courseId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "isliked": {
+                          "type": "boolean"
+                        },
+                        "likes": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "isliked",
+                        "likes"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/projects/profile": {
+      "get": {
+        "summary": "项目主页",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "catagory ",
+            "in": "query",
+            "description": "项目类别筛选（预设值：实训项目、课程设计、竞赛项目、个人项目等）",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "techStack",
+            "in": "query",
+            "description": "作者给自己的项目打的标签",
+            "required": false,
+            "example": [
+              "前端",
+              "后端",
+              "AI"
+            ],
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "排序规则：like_desc（点赞数降序）、latest（最新发布），默认latest",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "每页条数，默认10，最大20",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "游标 ID（滑动换页用，上一页最后一条项目的 ID）",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "resourceType",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "example": "项目",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "total": {
+                        "type": "string"
+                      },
+                      "items": {
+                        "$ref": "#/components/schemas/project_return"
+                      },
+                      "minItems": 2
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/projects/search": {
+      "get": {
+        "summary": "项目搜索",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "搜索关键词，匹配项目名、简介、技术栈",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "类别筛选（多个类别，如 [\"实训项目\", \"竞赛项目\"]）",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "上一页的最后一条项目ID",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "一页限制的条目数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/project_return"
+                      }
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/projects/{projectId}": {
+      "get": {
+        "summary": "项目详情",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/project_detail"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "更新项目",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "用户返回的token",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "项目名称，具有唯一性",
+                    "example": "{{$commerce.product}}",
+                    "type": "string"
+                  },
+                  "description": {
+                    "description": "项目简介",
+                    "example": "{{$lorem.sentences}}",
+                    "type": "string"
+                  },
+                  "detail": {
+                    "description": "项目详细介绍，支持markdown文档格式",
+                    "example": "{{$lorem.sentence}}",
+                    "type": "string"
+                  },
+                  "github": {
+                    "description": "Github 仓库链接（需 https 开头，可选）",
+                    "example": "{{$internet.url}}",
+                    "type": "string"
+                  },
+                  "techStack": {
+                    "description": "技术栈（3个，每个 1-10 字，如后端、Java 等）",
+                    "example": [
+                      "{{$food.dish}}",
+                      "{{$lorem.word}}",
+                      "{{$lorem.word}}"
+                    ],
+                    "type": "array"
+                  },
+                  "catagory": {
+                    "description": "规定选值，项目类别（必须为预设值：实训项目、课程设计等）",
+                    "example": "",
+                    "type": "string"
+                  },
+                  "images": {
+                    "description": "项目截图 URL（1-5 张，需先通过图片上传接口获取 URL，支持 jpg/png 格式）",
+                    "example": [
+                      "",
+                      "",
+                      "",
+                      "",
+                      ""
+                    ],
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "name",
+                  "description",
+                  "detail",
+                  "github",
+                  "techStack",
+                  "catagory",
+                  "images"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/resource_review"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/projects/upload": {
+      "post": {
+        "summary": "上传项目",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "认证token",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "项目名称，具有唯一性",
+                    "example": "{{$commerce.product}}",
+                    "type": "string"
+                  },
+                  "description": {
+                    "description": "项目简介",
+                    "example": "{{$lorem.sentences}}",
+                    "type": "string"
+                  },
+                  "detail": {
+                    "description": "项目详细介绍，支持markdown文档格式",
+                    "example": "{{$lorem.sentence}}",
+                    "type": "string"
+                  },
+                  "github": {
+                    "description": "Github 仓库链接（需 https 开头，可选）",
+                    "example": "{{$internet.url}}",
+                    "type": "string"
+                  },
+                  "techStack": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "技术栈（3个，每个 1-10 字，如后端、Java 等）",
+                    "example": [
+                      "{{$food.dish}}",
+                      "{{$lorem.word}}",
+                      "{{$lorem.word}}"
+                    ]
+                  },
+                  "catagory": {
+                    "description": "规定选值，项目类别（必须为预设值：实训项目、课程设计等）",
+                    "example": "",
+                    "type": "string"
+                  },
+                  "images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "项目截图 URL（1-5 张，需先通过图片上传接口获取 URL，支持 jpg/png 格式）",
+                    "example": [
+                      "",
+                      "",
+                      "",
+                      "",
+                      ""
+                    ]
+                  }
+                },
+                "required": [
+                  "name",
+                  "description",
+                  "detail",
+                  "github",
+                  "techStack",
+                  "catagory",
+                  "images"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/resource_review"
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/projects/{projectId}/like": {
+      "post": {
+        "summary": "点赞项目",
+        "deprecated": false,
+        "description": "调用一次该项目的点赞数+1",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "likecounts": {
+                          "type": "integer",
+                          "description": "项目增加点赞后的点赞数"
+                        },
+                        "isliked": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "likecounts",
+                        "isliked"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "取消点赞",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "likecounts": {
+                          "type": "integer"
+                        },
+                        "isliked": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "likecounts",
+                        "isliked"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/projects/{projectId}/comments": {
+      "post": {
+        "summary": "添加评论",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "description": "评论内容，不超过800",
+                    "example": "{{$lorem.sentences}}",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "content"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "comment_Id": {
+                          "type": "integer",
+                          "description": "评论用户的序列号"
+                        },
+                        "nickname": {
+                          "type": "string",
+                          "description": "评论用户的昵称"
+                        },
+                        "avater": {
+                          "type": "string",
+                          "description": "评论用户头像"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "评论详情"
+                        },
+                        "commentDate": {
+                          "type": "string",
+                          "description": "评论时间"
+                        },
+                        "love_count": {
+                          "type": "integer",
+                          "description": "点赞人数"
+                        },
+                        "reply_total": {
+                          "type": "integer",
+                          "description": "收录回复总数（为子节点该数目加起来）"
+                        },
+                        "replies": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/course_comment"
+                          },
+                          "description": "没有回复时允许为NULL"
+                        }
+                      },
+                      "required": [
+                        "comment_Id",
+                        "nickname",
+                        "avater",
+                        "comment",
+                        "commentDate",
+                        "love_count",
+                        "reply_total",
+                        "replies"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除评论",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "comment_Id": {
+                          "type": "integer",
+                          "description": "评论用户的序列号"
+                        },
+                        "nickname": {
+                          "type": "string",
+                          "description": "评论用户的昵称"
+                        },
+                        "avater": {
+                          "type": "string",
+                          "description": "评论用户头像"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "评论详情"
+                        },
+                        "delete_Date": {
+                          "type": "string",
+                          "description": "评论时间"
+                        }
+                      },
+                      "required": [
+                        "comment_Id",
+                        "nickname",
+                        "avater",
+                        "comment",
+                        "delete_Date"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/projects/{projectId}/comments/{commentId}/reply": {
+      "post": {
+        "summary": "回复评论",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "description": "用户回复的评论内容（不超过800字）",
+                    "example": "{{$lorem.sentences}}",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "content"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "comment_Id": {
+                          "type": "integer",
+                          "description": "评论用户的序列号"
+                        },
+                        "nickname": {
+                          "type": "string",
+                          "description": "评论用户的昵称"
+                        },
+                        "avater": {
+                          "type": "string",
+                          "description": "评论用户头像"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "评论详情"
+                        },
+                        "commentDate": {
+                          "type": "string",
+                          "description": "评论时间"
+                        },
+                        "love_count": {
+                          "type": "integer",
+                          "description": "点赞人数"
+                        },
+                        "reply_total": {
+                          "type": "integer",
+                          "description": "收录回复总数（为子节点该数目加起来）"
+                        },
+                        "replies": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/course_comment"
+                          },
+                          "description": "没有回复时允许为NULL"
+                        }
+                      },
+                      "required": [
+                        "comment_Id",
+                        "nickname",
+                        "avater",
+                        "comment",
+                        "commentDate",
+                        "love_count",
+                        "reply_total",
+                        "replies"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "删除回复",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "comment_Id": {
+                          "type": "integer",
+                          "description": "评论用户的序列号"
+                        },
+                        "nickname": {
+                          "type": "string",
+                          "description": "评论用户的昵称"
+                        },
+                        "avater": {
+                          "type": "string",
+                          "description": "评论用户头像"
+                        },
+                        "comment": {
+                          "type": "string",
+                          "description": "评论详情"
+                        },
+                        "delete_Date": {
+                          "type": "string",
+                          "description": "评论时间"
+                        }
+                      },
+                      "required": [
+                        "comment_Id",
+                        "nickname",
+                        "avater",
+                        "comment",
+                        "delete_Date"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/projects/{projectId}/view": {
+      "post": {
+        "summary": "项目观看",
+        "deprecated": false,
+        "description": "自动调用",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "views": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "views"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/projects/{projectId}/collected": {
+      "post": {
+        "summary": "项目收藏",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "iscollected": {
+                          "type": "boolean"
+                        },
+                        "collections": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "iscollected",
+                        "collections"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "项目取消收藏",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "iscollected": {
+                          "type": "boolean"
+                        },
+                        "collections": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "iscollected",
+                        "collections"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "message",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/pending": {
+      "get": {
+        "summary": "审核管理",
+        "deprecated": false,
+        "description": "获取所有待审核的投稿（工具、项目、课本、资料、课程评论等）",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "description": "从工具，课程，项目，评论中选择",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "description": "上一页最后一条的id",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "规定一页的条数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "默认按照时间顺序",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer"
+                    },
+                    "cursor": {
+                      "type": "integer",
+                      "description": "这一页的第一条id"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/submit"
+                      }
+                    }
+                  },
+                  "required": [
+                    "total",
+                    "cursor",
+                    "data"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/review/{itemId}": {
+      "get": {
+        "summary": "审核操作",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "action": {
+                    "description": "通过或者拒绝",
+                    "example": "",
+                    "type": "string"
+                  },
+                  "gejrct_reason": {
+                    "description": "拒绝时需要填写理由",
+                    "example": "",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "action",
+                  "gejrct_reason"
+                ]
+              },
+              "examples": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "message"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "user": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "username": {
+            "type": "string"
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "username",
+          "email",
+          "role",
+          "nickname"
+        ]
+      },
+      "users_pro": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "username": {
+            "type": "string",
+            "description": "用户名"
+          },
+          "nickname": {
+            "type": "string",
+            "description": "昵称"
+          },
+          "email": {
+            "type": "string",
+            "description": "个人邮箱"
+          },
+          "avater": {
+            "type": "string",
+            "description": "头像地址"
+          },
+          "description": {
+            "type": "string",
+            "description": "个人动态描述"
+          },
+          "face_photo": {
+            "type": "string",
+            "description": "封面地址"
+          }
+        },
+        "required": [
+          "id",
+          "username",
+          "email",
+          "avater",
+          "nickname",
+          "description",
+          "face_photo"
+        ]
+      },
+      "resource_review": {
+        "type": "object",
+        "properties": {
+          "resourceId": {
+            "type": "integer"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "resource": {
+            "type": "string",
+            "description": "提交暂存网址"
+          },
+          "auditStatus": {
+            "description": "pending/approved/rejected",
+            "type": "string"
+          },
+          "submitTime": {
+            "description": "提交时间（YYYY-MM-DD HH:mm:ss）",
+            "type": "string"
+          },
+          "auditTime": {
+            "description": "审核时间（未审核则为null）",
+            "type": "string"
+          },
+          "rejectReason": {
+            "description": "驳回原因（未驳回则为null）",
+            "type": "string"
+          }
+        },
+        "required": [
+          "resourceId",
+          "resourceType",
+          "auditStatus",
+          "submitTime",
+          "auditTime",
+          "rejectReason",
+          "resource"
+        ]
+      },
+      "resource_personal": {
+        "type": "object",
+        "properties": {
+          "resourceId": {
+            "type": "integer"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "resource": {
+            "type": "string",
+            "description": "提交暂存网址"
+          },
+          "image": {
+            "type": "string",
+            "title": "资源展示图片"
+          },
+          "introduce": {
+            "type": "string",
+            "title": "项目介绍"
+          },
+          "contributer": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/user"
+            },
+            "title": "贡献人员",
+            "uniqueItems": true,
+            "minItems": 4
+          }
+        },
+        "required": [
+          "image",
+          "introduce",
+          "contributer"
+        ]
+      },
+      "project": {
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "integer"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string",
+            "description": "实训，课程，科研，创新，个人，选一个"
+          },
+          "techStack": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 2,
+            "description": "作者打的标签，三个标签一个必须（分清前后端）"
+          },
+          "likecount": {
+            "type": "integer",
+            "description": "点赞数"
+          },
+          "authername": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "minItems": 2
+          },
+          "cover": {
+            "description": "课程封面图",
+            "type": "string"
+          },
+          "createdat": {
+            "type": "string",
+            "description": "学分"
+          },
+          "loves": {
+            "type": "integer"
+          },
+          "collections": {
+            "type": "integer"
+          },
+          "views": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "projectId",
+          "name",
+          "description",
+          "techStack",
+          "authername",
+          "createdat",
+          "cover",
+          "resourceType",
+          "likecount",
+          "category",
+          "loves",
+          "collections",
+          "views"
+        ]
+      },
+      "project_return": {
+        "type": "object",
+        "properties": {
+          "hasmore": {
+            "type": "boolean",
+            "description": "说明滑动是否滑到底"
+          },
+          "next_projectId": {
+            "type": "integer",
+            "description": "滑动下一页的第一行条目id",
+            "nullable": true
+          },
+          "resourceType": {
+            "type": "string",
+            "nullable": true
+          },
+          "projects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/project"
+            },
+            "minItems": 2
+          }
+        },
+        "required": [
+          "hasmore",
+          "next_projectId",
+          "resourceType",
+          "projects"
+        ]
+      },
+      "project_detail": {
+        "type": "object",
+        "properties": {
+          "projectId": {
+            "type": "integer"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "课程名称"
+          },
+          "description": {
+            "type": "string"
+          },
+          "githubURL": {
+            "type": "string"
+          },
+          "techStack": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 2
+          },
+          "catagory": {
+            "type": "string"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "likes": {
+            "type": "integer"
+          },
+          "views": {
+            "type": "integer"
+          },
+          "collections": {
+            "type": "integer"
+          },
+          "isliked": {
+            "type": "boolean"
+          },
+          "iscollected": {
+            "type": "boolean"
+          },
+          "author": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "用户的昵称"
+            },
+            "minItems": 2
+          },
+          "comment_count": {
+            "type": "integer",
+            "description": "评论数量"
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/project_comment"
+            },
+            "description": "评论"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "创立时间"
+          }
+        },
+        "required": [
+          "projectId",
+          "name",
+          "description",
+          "createdAt",
+          "resourceType",
+          "comments",
+          "techStack",
+          "githubURL",
+          "catagory",
+          "images",
+          "iscollected",
+          "isliked",
+          "collections",
+          "views",
+          "likes",
+          "author",
+          "comment_count"
+        ]
+      },
+      "project_comment": {
+        "type": "object",
+        "properties": {
+          "comment_Id": {
+            "type": "integer",
+            "description": "评论用户的序列号"
+          },
+          "commentId": {
+            "type": "integer",
+            "description": "该评论父节点的id，父节点凭此找到子节点并且使reply_total+1",
+            "nullable": true
+          },
+          "nickname": {
+            "type": "string",
+            "description": "评论用户的昵称"
+          },
+          "avater": {
+            "type": "string",
+            "description": "评论用户头像"
+          },
+          "comment": {
+            "type": "string",
+            "description": "评论详情"
+          },
+          "commentDate": {
+            "type": "string",
+            "description": "评论时间"
+          },
+          "love_count": {
+            "type": "integer",
+            "description": "点赞人数"
+          },
+          "isowner": {
+            "type": "boolean",
+            "description": "判断用户是否为评论作者，游客为NULL",
+            "nullable": true
+          },
+          "isreply": {
+            "type": "boolean",
+            "description": "判断是否为回复，刚发表时默认为false"
+          },
+          "reply_total": {
+            "type": "integer",
+            "description": "收录回复总数（为子节点该数目加起来）"
+          },
+          "replies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/course_comment"
+            },
+            "description": "没有回复时允许为NULL"
+          }
+        },
+        "required": [
+          "comment_Id",
+          "nickname",
+          "avater",
+          "comment",
+          "commentDate",
+          "isowner",
+          "isreply",
+          "reply_total",
+          "replies",
+          "love_count",
+          "commentId"
+        ]
+      },
+      "tool_review": {
+        "type": "object",
+        "properties": {
+          "resourceId": {
+            "type": "integer"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "resource": {
+            "type": "string",
+            "description": "提交暂存网址"
+          },
+          "auditStatus": {
+            "description": "pending/approved/rejected",
+            "type": "string"
+          },
+          "submitTime": {
+            "description": "提交时间（YYYY-MM-DD HH:mm:ss）",
+            "type": "string"
+          },
+          "auditTime": {
+            "type": "string",
+            "description": "审核时间（未审核则为null）",
+            "nullable": true
+          },
+          "rejectReason": {
+            "type": "string",
+            "description": "驳回原因（未驳回则为null）",
+            "nullable": true
+          }
+        },
+        "required": [
+          "resourceId",
+          "resourceType",
+          "auditStatus",
+          "submitTime",
+          "auditTime",
+          "rejectReason",
+          "resource"
+        ]
+      },
+      "tool_personal": {
+        "type": "object",
+        "properties": {
+          "resourceId": {
+            "type": "integer"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "resource": {
+            "type": "string",
+            "description": "提交暂存网址"
+          },
+          "image": {
+            "type": "string",
+            "title": "资源展示图片"
+          },
+          "introduce": {
+            "type": "string",
+            "title": "项目介绍"
+          },
+          "contributer": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/user"
+            },
+            "title": "贡献人员",
+            "uniqueItems": true,
+            "minItems": 1
+          }
+        },
+        "required": [
+          "image",
+          "introduce"
+        ]
+      },
+      "tool_get": {
+        "type": "object",
+        "properties": {
+          "resourceId": {
+            "type": "integer"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "resourceName": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string",
+            "description": "介绍展示图片"
+          },
+          "catagory": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 3
+          },
+          "contributors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 2
+          },
+          "views": {
+            "type": "integer",
+            "description": "浏览量，自增"
+          },
+          "collections": {
+            "type": "integer",
+            "description": "收藏量，自增"
+          },
+          "loves": {
+            "type": "integer",
+            "description": "喜爱量，自增"
+          },
+          "createdat": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "resourceId",
+          "resourceType",
+          "description",
+          "catagory",
+          "tags",
+          "views",
+          "resourceName",
+          "collections",
+          "image",
+          "loves",
+          "contributors",
+          "createdat"
+        ]
+      },
+      "tool_return": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "总数"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "page_size": {
+            "type": "integer"
+          },
+          "tool": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/tool_get"
+            },
+            "minItems": 2
+          }
+        },
+        "required": [
+          "total",
+          "page",
+          "page_size",
+          "tool"
+        ]
+      },
+      "tool_detail": {
+        "type": "object",
+        "properties": {
+          "resourceId": {
+            "type": "integer"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "resourceName": {
+            "type": "string"
+          },
+          "resourceLink": {
+            "type": "string"
+          },
+          "description_detail": {
+            "type": "string"
+          },
+          "catagory": {
+            "type": "string"
+          },
+          "image": {
+            "type": "array",
+            "description": "介绍展示图片",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 3
+          },
+          "views": {
+            "type": "integer",
+            "description": "浏览量，自增"
+          },
+          "collections": {
+            "type": "integer",
+            "description": "收藏量，自增"
+          },
+          "loves": {
+            "type": "integer",
+            "description": "喜欢量，自增"
+          },
+          "iscollected": {
+            "type": "boolean",
+            "description": "用户登录时，显示是否收藏，未登录时默认都是未收藏",
+            "nullable": true
+          },
+          "isliked": {
+            "type": "boolean",
+            "description": "用户登录时，显示是否点赞，未登录时默认都是未点赞"
+          },
+          "comment_count": {
+            "type": "integer",
+            "description": "评论数量"
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/tool_comment"
+            },
+            "minItems": 2
+          },
+          "createdDate": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "resourceId",
+          "resourceType",
+          "description_detail",
+          "catagory",
+          "tags",
+          "views",
+          "resourceName",
+          "collections",
+          "image",
+          "resourceLink",
+          "iscollected",
+          "comments",
+          "createdDate",
+          "loves",
+          "isliked",
+          "comment_count"
+        ]
+      },
+      "tool_comment": {
+        "type": "object",
+        "properties": {
+          "comment_Id": {
+            "type": "integer",
+            "description": "评论用户的序列号"
+          },
+          "commetnId": {
+            "type": "integer",
+            "description": "父节点的id，凭借此找到父节点id并使其评论量+1",
+            "nullable": true
+          },
+          "nickname": {
+            "type": "string",
+            "description": "评论用户的昵称"
+          },
+          "avater": {
+            "type": "string",
+            "description": "评论用户头像"
+          },
+          "comment": {
+            "type": "string",
+            "description": "评论详情"
+          },
+          "commentDate": {
+            "type": "string",
+            "description": "评论时间"
+          },
+          "love_count": {
+            "type": "integer",
+            "description": "点赞数"
+          },
+          "isowner": {
+            "type": "boolean",
+            "description": "判断用户是否为评论作者，游客为NULL",
+            "nullable": true
+          },
+          "isreply": {
+            "type": "boolean",
+            "description": "判断是否为回复"
+          },
+          "reply_total": {
+            "type": "integer",
+            "description": "回复总数"
+          },
+          "replies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/tool_comment"
+            }
+          }
+        },
+        "required": [
+          "comment_Id",
+          "nickname",
+          "avater",
+          "comment",
+          "commentDate",
+          "isowner",
+          "love_count",
+          "isreply",
+          "reply_total",
+          "replies",
+          "commetnId"
+        ]
+      },
+      "resource_web": {
+        "type": "object",
+        "properties": {
+          "resource_intro": {
+            "type": "string",
+            "description": "资源说明"
+          },
+          "resource_url": {
+            "type": "string",
+            "description": "资源网址"
+          },
+          "resource_id": {
+            "type": "integer",
+            "description": "url资源序列号"
+          }
+        },
+        "required": [
+          "resource_intro",
+          "resource_url",
+          "resource_id"
+        ]
+      },
+      "resource_upload": {
+        "type": "object",
+        "properties": {
+          "resource_intro": {
+            "type": "string",
+            "description": "资源说明"
+          },
+          "resource_upload": {
+            "type": "string",
+            "description": "上传的本地文件"
+          },
+          "resource_id": {
+            "type": "integer",
+            "description": "url资源序列号"
+          }
+        },
+        "required": [
+          "resource_intro",
+          "resource_upload",
+          "resource_id"
+        ]
+      },
+      "teach_review": {
+        "type": "object",
+        "properties": {
+          "resourceId": {
+            "type": "integer"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "resource1": {
+            "$ref": "#/components/schemas/resource_web",
+            "nullable": true
+          },
+          "resource2": {
+            "$ref": "#/components/schemas/resource_upload"
+          },
+          "auditStatus": {
+            "description": "pending/approved/rejected",
+            "type": "string"
+          },
+          "submitTime": {
+            "description": "提交时间（YYYY-MM-DD HH:mm:ss）",
+            "type": "string"
+          },
+          "auditTime": {
+            "description": "审核时间（未审核则为null）",
+            "type": "string"
+          },
+          "rejectReason": {
+            "description": "驳回原因（未驳回则为null）",
+            "type": "string"
+          }
+        },
+        "required": [
+          "resourceId",
+          "resourceType",
+          "auditStatus",
+          "submitTime",
+          "auditTime",
+          "rejectReason",
+          "resource1",
+          "resource2"
+        ]
+      },
+      "teach_personal": {
+        "type": "object",
+        "properties": {
+          "resourceId": {
+            "type": "integer"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "resource": {
+            "type": "string",
+            "description": "提交暂存网址"
+          },
+          "image": {
+            "type": "string",
+            "title": "资源展示图片"
+          },
+          "introduce": {
+            "type": "string",
+            "title": "项目介绍"
+          },
+          "contributer": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/user"
+            },
+            "title": "贡献人员",
+            "uniqueItems": true,
+            "minItems": 2
+          }
+        },
+        "required": [
+          "image",
+          "introduce"
+        ]
+      },
+      "course": {
+        "type": "object",
+        "properties": {
+          "courseId": {
+            "type": "integer"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "teacher": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "category": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 2
+          },
+          "semester": {
+            "type": "string"
+          },
+          "credit": {
+            "description": "学分",
+            "type": "integer"
+          },
+          "cover": {
+            "description": "课程封面图",
+            "type": "string"
+          },
+          "views": {
+            "type": "integer"
+          },
+          "loves": {
+            "type": "integer"
+          },
+          "collections": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "courseId",
+          "name",
+          "teacher",
+          "category",
+          "semester",
+          "credit",
+          "cover",
+          "resourceType",
+          "views",
+          "loves",
+          "collections"
+        ]
+      },
+      "course_return": {
+        "type": "object",
+        "properties": {
+          "hasmore": {
+            "type": "boolean",
+            "description": "说明滑动是否滑到底"
+          },
+          "next_courseId": {
+            "type": "integer",
+            "description": "滑动下一页的第一行条目id",
+            "nullable": true
+          },
+          "resourceType": {
+            "type": "string",
+            "nullable": true
+          },
+          "courses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/project"
+            },
+            "minItems": 2
+          }
+        },
+        "required": [
+          "hasmore",
+          "next_courseId",
+          "resourceType",
+          "courses"
+        ]
+      },
+      "course_comment": {
+        "type": "object",
+        "properties": {
+          "comment_Id": {
+            "type": "integer",
+            "description": "评论用户的序列号"
+          },
+          "commentId": {
+            "type": "integer",
+            "description": "该评论父节点的id，父节点凭此找到子节点并且使reply_total+1",
+            "nullable": true
+          },
+          "nickname": {
+            "type": "string",
+            "description": "评论用户的昵称"
+          },
+          "avater": {
+            "type": "string",
+            "description": "评论用户头像"
+          },
+          "comment": {
+            "type": "string",
+            "description": "评论详情"
+          },
+          "commentDate": {
+            "type": "string",
+            "description": "评论时间"
+          },
+          "love_count": {
+            "type": "integer",
+            "description": "点赞人数"
+          },
+          "isowner": {
+            "type": "boolean",
+            "description": "判断用户是否为评论作者，游客为NULL",
+            "nullable": true
+          },
+          "isreply": {
+            "type": "boolean",
+            "description": "判断是否为回复，刚发表时默认为false"
+          },
+          "reply_total": {
+            "type": "integer",
+            "description": "收录回复总数（为子节点该数目加起来）"
+          },
+          "replies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/course_comment"
+            },
+            "description": "没有回复时允许为NULL"
+          }
+        },
+        "required": [
+          "comment_Id",
+          "nickname",
+          "avater",
+          "comment",
+          "commentDate",
+          "isowner",
+          "isreply",
+          "reply_total",
+          "replies",
+          "love_count",
+          "commentId"
+        ]
+      },
+      "course_detail": {
+        "type": "object",
+        "properties": {
+          "courseId": {
+            "type": "integer"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "课程名称"
+          },
+          "catagory": {
+            "type": "string"
+          },
+          "url_form": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/resource_web"
+            },
+            "minItems": 2
+          },
+          "upload_form": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/resource_upload"
+            },
+            "minItems": 2
+          },
+          "contributor": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "贡献者"
+            }
+          },
+          "collections": {
+            "type": "integer"
+          },
+          "views": {
+            "type": "integer"
+          },
+          "likes": {
+            "type": "integer"
+          },
+          "isliked": {
+            "type": "boolean"
+          },
+          "iscollected": {
+            "type": "boolean"
+          },
+          "comment_total": {
+            "type": "integer",
+            "description": "评论数量"
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/course_comment"
+            },
+            "description": "评论",
+            "minItems": 2
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "创立时间"
+          }
+        },
+        "required": [
+          "courseId",
+          "name",
+          "catagory",
+          "createdAt",
+          "resourceType",
+          "contributor",
+          "comments",
+          "url_form",
+          "upload_form",
+          "isliked",
+          "likes",
+          "views",
+          "collections",
+          "iscollected",
+          "comment_total"
+        ]
+      },
+      "maneuver": {
+        "type": "object",
+        "properties": {
+          "resourceId": {
+            "type": "integer"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "newstatus": {
+            "type": "string"
+          },
+          "oldestatus": {
+            "type": "string"
+          },
+          "operateTime": {
+            "type": "string"
+          },
+          "operator": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "resourceId",
+          "resourceType",
+          "newstatus",
+          "oldestatus",
+          "operateTime",
+          "operator"
+        ]
+      },
+      "submit": {
+        "type": "object",
+        "properties": {
+          "submitor": {
+            "type": "string"
+          },
+          "submitDate": {
+            "type": "string"
+          },
+          "reourceId": {
+            "type": "integer"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "catagory": {
+            "type": "string"
+          },
+          "link": {
+            "type": "string",
+            "description": "网址"
+          },
+          "file": {
+            "type": "string",
+            "description": "提交文件，与type选取相关"
+          },
+          "description": {
+            "type": "string",
+            "description": "描述"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "resourcename": {
+            "type": "string",
+            "description": "名字"
+          }
+        },
+        "required": [
+          "submitor",
+          "submitDate",
+          "reourceId",
+          "resourceType",
+          "resourcename",
+          "catagory",
+          "link",
+          "description",
+          "tags",
+          "file"
+        ]
+      }
+    },
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}

@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+tmp/
+node_modules/
+dist/
+.env
+softeng-platform/softeng-platform/.env
+softeng-platform-frontend/node_modules/
+softeng-platform-frontend/dist/
+.idea/
+.vscode/

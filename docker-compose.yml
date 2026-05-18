@@ -1,0 +1,69 @@
+# 软件工程平台 · 一键编排（课程演示 / A19）
+# 用法（仓库根目录）：docker compose up -d --build
+# 首次启动 MySQL 会依次执行 database/schema.sql 与 database/seed_demo.sql（演示数据）。
+# 前端默认仍请求 localhost:8080 API；若用下方 web 服务，请将 softeng-platform-frontend/src/api/config.js 的 BASE_URL
+# 改为 http://localhost:8080 或走 nginx 反代（可自行扩展）。
+# 构建前端镜像时通过 web.build.args.VUE_APP_API_BASE 写入 VUE_APP_API_BASE（见 frontend Dockerfile）。
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: softeng-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: devroot
+    ports:
+      - "3306:3306"
+    volumes:
+      - softeng-mysql-data:/var/lib/mysql
+      - ./softeng-platform/softeng-platform/database/schema.sql:/docker-entrypoint-initdb.d/01-softeng.sql:ro
+      - ./softeng-platform/softeng-platform/database/seed_demo.sql:/docker-entrypoint-initdb.d/02-seed_demo.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pdevroot"]
+      interval: 8s
+      timeout: 5s
+      retries: 12
+
+  api:
+    build:
+      context: ./softeng-platform/softeng-platform
+      dockerfile: Dockerfile
+    container_name: softeng-api
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_USER: root
+      DB_PASSWORD: devroot
+      DB_NAME: softeng
+      JWT_SECRET: change-me-in-demo-only
+      # 设为 production 时 Gin 使用 release 模式并关闭逐请求 [DEBUG] 日志
+      # APP_ENV: production
+      # 与浏览器访问前端的 Origin 对齐（多源逗号分隔）；不配则后端使用代码内本地默认
+      # CORS_ALLOWED_ORIGINS: "http://localhost:3000,http://127.0.0.1:3000"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://127.0.0.1:8080/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 25s
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ./softeng-platform-frontend
+      dockerfile: Dockerfile
+      args:
+        VUE_APP_API_BASE: "http://localhost:8080"
+    container_name: softeng-web
+    ports:
+      - "3000:80"
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  softeng-mysql-data:
