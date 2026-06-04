@@ -1124,20 +1124,25 @@ JWT密钥加载优化在`internal/utils/jwt.go`中实现，使用`sync.Once`确�
 ### 15.1 环境配置
 
 **开发环境配置：**
-1. 创建`.env`文件，配置以下环境变量：
+1. 复制 `softeng-platform/softeng-platform/.env.example` 为 `.env`，配置例如：
    ```
    PORT=8080
-   DATABASE_URL=root:password@tcp(127.0.0.1:3306)/softeng?parseTime=true&loc=Local
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_USER=softeng_app
+   DB_PASSWORD=123456
+   DB_NAME=softeng
    JWT_SECRET=your-secret-key
    ```
+   （也可使用 root 等账号，与 `DB_*` 字段一致即可。）
 
-2. 确保MySQL数据库已启动
-3. 执行`database/schema.sql`创建数据库表结构
+2. 确保 MySQL 数据库已启动
+3. 执行 `database/bootstrap_user.sql`（推荐）、`database/schema.sql` 与演示数据 `seed_demo.sql`
 
 **生产环境配置：**
-1. 使用系统环境变量，不依赖`.env`文件
-2. 设置强密码的JWT密钥
-3. 配置生产数据库连接字符串
+1. 使用系统环境变量，不依赖 `.env` 文件
+2. 设置强密码的 JWT 密钥
+3. 配置生产环境 `DB_*` 连接参数
 4. 设置合适的端口号
 
 ### 15.2 编译与运行

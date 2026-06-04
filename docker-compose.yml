@@ -1,4 +1,4 @@
-# 软件工程平台 · 一键编排（课程演示 / A19）
+# 软件工程平台 · 一键编排（课程演示参考；本地开发见 运行说明.md，无需 Docker）
 # 用法（仓库根目录）：docker compose up -d --build
 # 首次启动 MySQL 会依次执行 database/schema.sql 与 database/seed_demo.sql（演示数据）。
 # 前端默认仍请求 localhost:8080 API；若用下方 web 服务，请将 softeng-platform-frontend/src/api/config.js 的 BASE_URL
@@ -17,6 +17,9 @@ services:
       - softeng-mysql-data:/var/lib/mysql
       - ./softeng-platform/softeng-platform/database/schema.sql:/docker-entrypoint-initdb.d/01-softeng.sql:ro
       - ./softeng-platform/softeng-platform/database/seed_demo.sql:/docker-entrypoint-initdb.d/02-seed_demo.sql:ro
+      - ./softeng-platform/softeng-platform/database/seed_course_content_all_19.sql:/docker-entrypoint-initdb.d/03-seed_course_content.sql:ro
+      - ./softeng-platform/softeng-platform/database/patch_project_content_insight.sql:/docker-entrypoint-initdb.d/04-patch_project_content_insight.sql:ro
+      - ./softeng-platform/softeng-platform/database/seed_project_content_all_8.sql:/docker-entrypoint-initdb.d/05-seed_project_content.sql:ro
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pdevroot"]
       interval: 8s
@@ -42,6 +45,9 @@ services:
       # APP_ENV: production
       # 与浏览器访问前端的 Origin 对齐（多源逗号分隔）；不配则后端使用代码内本地默认
       # CORS_ALLOWED_ORIGINS: "http://localhost:3000,http://127.0.0.1:3000"
+      AGENT_BASE_URL: http://agent:8766
+    env_file:
+      - ./softeng-platform/softeng-platform/.env
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "-", "http://127.0.0.1:8080/health"]
       interval: 15s
@@ -50,6 +56,8 @@ services:
       start_period: 25s
     depends_on:
       mysql:
+        condition: service_healthy
+      agent:
         condition: service_healthy
 
   web:
@@ -65,5 +73,28 @@ services:
       api:
         condition: service_healthy
 
+  agent:
+    build:
+      context: ./agent
+      dockerfile: Dockerfile
+    container_name: softeng-agent
+    ports:
+      - "8766:8766"
+    environment:
+      AGENT_PORT: "8766"
+      CHROMA_PERSIST_DIR: /app/data/chroma
+      CHROMA_COLLECTION: softeng_rag_v1
+    env_file:
+      - ./agent/.env
+    volumes:
+      - softeng-agent-data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8766/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
 volumes:
   softeng-mysql-data:
+  softeng-agent-data:
