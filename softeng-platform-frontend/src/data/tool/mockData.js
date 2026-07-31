@@ -1,0 +1,701 @@
+export const mockTools = [
+  // 软件开发 (8个)
+  {
+    id: 1,
+    name: 'VS Code',
+    category: '软件开发',
+    logo: 'https://fakeicon.com/vscode.png',
+    desc: '微软开发的免费开源代码编辑器，支持多种编程语言和扩展插件。',
+    fullDesc: 'Visual Studio Code 是一款由微软开发的免费、开源的现代化轻量级代码编辑器，支持几乎所有主流的开发语言，拥有丰富的插件生态系统，支持 Git、调试、智能代码补全、代码片段等功能，是开发者最喜爱的编辑器之一。',
+    instructions: '1. 访问官网下载并安装 VS Code\n2. 安装扩展：按 Ctrl+Shift+X 打开扩展商店\n3. 配置快捷键：文件 -> 首选项 -> 键盘快捷方式\n4. 集成终端：按 Ctrl+~ 打开终端\n5. 推荐安装扩展：ESLint、Prettier、GitLens',
+    views: 89215,
+    stars: 485,
+    tags: ['open-source', 'free', 'general', 'cross-platform'],
+    url: 'https://code.visualstudio.com'
+  },
+  {
+    id: 2,
+    name: 'GitHub Copilot',
+    category: '软件开发',
+    logo: 'https://fakeicon.com/copilot.png',
+    desc: 'AI代码助手，基于OpenAI Codex模型，提供智能代码补全功能。',
+    fullDesc: 'GitHub Copilot 是由 GitHub 和 OpenAI 共同开发的 AI 代码助手，可以实时提供代码建议、自动补全、生成测试代码等。支持多种编程语言和框架，能够显著提升开发效率。',
+    instructions: '1. 需要 GitHub 账户并订阅 Copilot 服务\n2. 在 VS Code 中安装 Copilot 扩展\n3. 登录 GitHub 账户进行授权\n4. 在编辑器中输入注释或函数名，Copilot 会自动建议代码\n5. 按 Tab 键接受建议，按 Esc 键拒绝',
+    views: 65432,
+    stars: 3927,
+    tags: ['ai-ml', 'paid', 'general'],
+    url: 'https://copilot.github.com'
+  },
+  {
+    id: 3,
+    name: 'Postman',
+    category: '软件开发',
+    logo: 'https://fakeicon.com/postman.png',
+    desc: 'API开发与测试工具，支持REST、GraphQL等多种API类型。',
+    fullDesc: 'Postman 是一款用于 API 开发、测试和管理的强大工具，支持团队协作、自动化测试、Mock Server 等功能，是前后端分离开发模式下的必备工具。',
+    instructions: '1. 下载安装 Postman 桌面应用或使用网页版\n2. 创建新的请求（Request）\n3. 设置请求方法（GET、POST等）和 URL\n4. 添加请求头和请求体\n5. 点击 Send 发送请求，查看响应结果\n6. 使用 Collections 组织和管理 API 集合',
+    views: 58763,
+    stars: 3456,
+    tags: ['api', 'test', 'cross-platform', 'ide'],
+    url: 'https://www.postman.com'
+  },
+  {
+    id: 4,
+    name: 'Docker Desktop',
+    category: '软件开发',
+    logo: 'https://fakeicon.com/docker.png',
+    desc: '容器化平台，简化应用的构建、打包和部署流程。',
+    fullDesc: 'Docker Desktop 是 Docker 官方提供的桌面应用程序，允许开发者在本地环境中轻松构建、运行和分享容器化应用，支持 Windows、Mac 和 Linux。',
+    instructions: '1. 从官网下载对应系统的 Docker Desktop\n2. 安装完成后启动 Docker Desktop\n3. 在终端运行 `docker --version` 检查安装\n4. 拉取镜像：`docker pull image-name`\n5. 运行容器：`docker run -d -p 8080:80 image-name`\n6. 使用 Dockerfile 构建自定义镜像',
+    views: 43210,
+    stars: 298,
+    tags: ['general', 'cross-platform', 'devops'],
+    url: 'https://www.docker.com/products/docker-desktop'
+  },
+  {
+    id: 5,
+    name: 'Figma',
+    category: '软件开发',
+    logo: 'https://fakeicon.com/figma.png',
+    desc: '云端设计协作工具，支持实时协作和设计系统管理。',
+    fullDesc: 'Figma 是一款基于云端的 UI/UX 项目协作，支持实时协作、设计系统、原型制作等功能，已成为设计师和开发者的首选协作工具。',
+    instructions: '1. 注册 Figma 账户（免费版可用）\n2. 创建新文件或打开模板\n3. 使用工具栏创建形状、文本等元素\n4. 使用组件（Components）创建可复用设计元素\n5. 创建原型连接：选择元素 -> 右侧 Prototype 面板 -> 添加连接\n6. 分享设计链接，邀请团队成员协作',
+    views: 37654,
+    stars: 267,
+    tags: ['design', 'community', 'web'],
+    url: 'https://www.figma.com'
+  },
+  {
+    id: 6,
+    name: 'Notion',
+    category: '软件开发',
+    logo: 'https://fakeicon.com/notion.png',
+    desc: '一体化工作空间，整合笔记、任务、数据库和项目管理功能。',
+    fullDesc: 'Notion 是一款集成了笔记、任务管理、数据库、知识库等多种功能的一体化工作空间，支持 Markdown、实时协作和强大的模板系统。',
+    instructions: '1. 注册 Notion 账户\n2. 选择使用场景（个人、团队等）\n3. 创建页面：点击左侧 + New Page\n4. 使用 / 命令快速插入各种内容块\n5. 创建数据库：选择 Database 视图\n6. 分享页面：点击右上角 Share 按钮\n7. 使用模板库加速工作流',
+    views: 42108,
+    stars: 312,
+    tags: ['general', 'community'],
+    url: 'https://www.notion.so'
+  },
+  {
+    id: 7,
+    name: 'Tailwind CSS',
+    category: '软件开发',
+    logo: 'https://fakeicon.com/tailwind.png',
+    desc: '实用优先的CSS框架，快速构建现代化用户界面。',
+    fullDesc: 'Tailwind CSS 是一个实用优先的 CSS 框架，通过提供大量可组合的实用类，让开发者能够快速构建自定义设计，无需离开 HTML。',
+    instructions: '1. 通过 npm 安装：`npm install -D tailwindcss`\n2. 初始化配置文件：`npx tailwindcss init`\n3. 配置模板路径：在 tailwind.config.js 中添加 content 路径\n4. 在 CSS 文件中导入：`@tailwind base; @tailwind components; @tailwind utilities;`\n5. 在 HTML 中使用实用类：`class="p-4 bg-blue-500 text-white"`',
+    views: 38765,
+    stars: 289,
+    tags: ['general', 'frontend', 'open-source'],
+    url: 'https://tailwindcss.com'
+  },
+  {
+    id: 8,
+    name: 'ChatGPT',
+    category: '软件开发',
+    logo: 'https://fakeicon.com/chatgpt.png',
+    desc: 'OpenAI开发的大型语言模型，提供智能对话和代码生成能力。',
+    fullDesc: 'ChatGPT 是由 OpenAI 开发的大型语言模型，能够进行自然语言对话、代码编写、问题解答、内容创作等多种任务，是开发者的强大助手。',
+    instructions: '1. 访问 chat.openai.com 注册账户\n2. 选择 ChatGPT 版本（免费版或 Plus）\n3. 在输入框中输入问题或指令\n4. 使用系统提示词引导 AI 行为\n5. 对于代码生成，明确指定语言和框架\n6. 可以要求 AI 逐步解释或修改输出\n7. 注意隐私，不要输入敏感信息',
+    views: 99876,
+    stars: 512,
+    tags: ['ai-ml', 'general'],
+    url: 'https://chat.openai.com'
+  },
+
+  // 项目协作 (6个)
+  {
+    id: 9,
+    name: 'Figma',
+    category: '项目协作',
+    logo: 'https://fakeicon.com/figma.png',
+    desc: '云端设计协作平台，支持实时协作和设计系统。',
+    fullDesc: 'Figma 是一款基于浏览器的协作式 UI 项目协作，无需下载安装，支持多人实时协作，是团队设计的首选工具。',
+    instructions: '1. 访问 figma.com 创建免费账户\n2. 新建设计文件或使用团队模板\n3. 邀请团队成员：点击右上角 Share 按钮\n4. 设置协作权限：可查看、可编辑等\n5. 使用评论功能：按 C 键添加评论\n6. 版本历史：查看和恢复历史版本\n7. 导出设计资源：选择图层 -> 右侧 Export 面板',
+    views: 87654,
+    stars: 498,
+    tags: ['design', 'community', 'web'],
+    url: 'https://www.figma.com'
+  },
+  {
+    id: 10,
+    name: 'Adobe Photoshop',
+    category: '项目协作',
+    logo: 'https://fakeicon.com/photoshop.png',
+    desc: '专业的图像处理和编辑软件，功能强大全面。',
+    fullDesc: 'Adobe Photoshop 是业界标准的图像编辑软件，提供强大的图像处理、合成和特效功能，广泛应用于平面设计、摄影后期等领域。',
+    instructions: '1. 安装 Adobe Creative Cloud 并订阅 Photoshop\n2. 打开图像文件：文件 -> 打开\n3. 使用图层（Layers）进行非破坏性编辑\n4. 常用工具：移动工具（V）、选框工具（M）、套索工具（L）\n5. 调整图像：图像 -> 调整 -> 色阶/曲线/色彩平衡\n6. 保存为 PSD 格式保留图层，或导出为 JPG/PNG\n7. 使用动作（Actions）自动化重复任务',
+    views: 76543,
+    stars: 432,
+    tags: ['general', 'paid'],
+    url: 'https://www.adobe.com/products/photoshop.html'
+  },
+  {
+    id: 11,
+    name: 'Sketch',
+    category: '项目协作',
+    logo: 'https://fakeicon.com/sketch.png',
+    desc: 'macOS平台的UI项目协作，专注于数字产品设计。',
+    fullDesc: 'Sketch 是一款 macOS 专用的矢量图形编辑软件，专注于 UI/UX 设计，提供简洁的界面和强大的设计功能。',
+    instructions: '1. 仅支持 macOS 系统\n2. 从官网购买并下载 Sketch\n3. 创建画板（Artboard）：按 A 键\n4. 使用符号（Symbols）创建可复用组件\n5. 创建共享样式：文本和图层样式\n6. 使用插件扩展功能：Plugins -> Manage Plugins\n7. 导出设计资源：选中图层 -> 右侧导出设置',
+    views: 54321,
+    stars: 321,
+    tags: ['design', 'macos', 'general'],
+    url: 'https://www.sketch.com'
+  },
+  {
+    id: 12,
+    name: 'Canva',
+    category: '项目协作',
+    logo: 'https://fakeicon.com/canva.png',
+    desc: '在线设计平台，提供海量模板，适合非专业设计师使用。',
+    fullDesc: 'Canva 是一款简单易用的在线项目协作，提供丰富的模板、字体和素材，让非专业用户也能轻松创建精美的设计作品。',
+    instructions: '1. 访问 canva.com 注册账户\n2. 选择设计类型：社交媒体、海报、演示文稿等\n3. 选择模板或从头开始创建\n4. 拖拽元素：文本、图片、形状、图标\n5. 上传自己的图片或使用 Canva 素材库\n6. 调整颜色和字体保持品牌一致性\n7. 下载设计：支持 PNG、PDF、JPG 等格式',
+    views: 98765,
+    stars: 567,
+    tags: ['web', 'general'],
+    url: 'https://www.canva.com'
+  },
+  {
+    id: 13,
+    name: 'Framer',
+    category: '项目协作',
+    logo: 'https://fakeicon.com/framer.png',
+    desc: '交互式原型项目协作，支持代码组件和高级动效。',
+    fullDesc: 'Framer 是一款强大的交互式原型项目协作，支持 React 组件、高级动效和真实数据，是设计高保真原型的理想选择。',
+    instructions: '1. 访问 framer.com 创建账户\n2. 下载桌面应用或使用网页版\n3. 导入 Figma 或 Sketch 设计文件\n4. 添加交互：选择元素 -> 右侧 Prototype 面板\n5. 使用代码组件：支持 React 组件集成\n6. 预览原型：点击右上角 Preview 按钮\n7. 分享原型链接供他人测试',
+    views: 23456,
+    stars: 198,
+    tags: ['design', 'general'],
+    url: 'https://www.framer.com'
+  },
+  {
+    id: 14,
+    name: 'Blender',
+    category: '项目协作',
+    logo: 'https://fakeicon.com/blender.png',
+    desc: '免费开源的3D创作套件，支持建模、动画、渲染等功能。',
+    fullDesc: 'Blender 是一款免费开源的 3D 创作套件，支持从建模、雕刻、动画、渲染到视频编辑的全流程 3D 制作。',
+    instructions: '1. 从 blender.org 下载对应版本\n2. 学习基础操作：移动视角（鼠标中键）、选择（右键）\n3. 建模：编辑模式（Tab键）下使用挤出、环切等工具\n4. 添加材质：材质属性面板\n5. 设置灯光和摄像机\n6. 渲染设置：选择渲染引擎（Eevee 或 Cycles）\n7. 导出模型：支持 OBJ、FBX、GLTF 等格式',
+    views: 34567,
+    stars: 289,
+    tags: ['general', 'open-source', 'free'],
+    url: 'https://www.blender.org'
+  },
+
+  // 个人提升 (14个)
+  {
+    id: 15,
+    name: 'Midjourney',
+    category: '个人提升',
+    logo: 'https://fakeicon.com/midjourney.png',
+    desc: 'AI图像生成工具，通过文本描述创建高质量艺术作品。',
+    fullDesc: 'Midjourney 是一款基于 AI 的图像生成工具，通过简单的文本描述即可生成高质量的艺术作品、插画和概念图。',
+    instructions: '1. 注册 Discord 账户\n2. 加入 Midjourney Discord 服务器\n3. 在 #newbies 频道输入 /imagine 命令\n4. 输入详细的提示词（prompt）描述想要的图像\n5. 等待生成结果（约 1 分钟）\n6. 使用 U 按钮放大选定图像，V 按钮生成变体\n7. 订阅付费计划获得更多生成次数和功能',
+    views: 87654,
+    stars: 489,
+    tags: ['ai-ml', 'general'],
+    url: 'https://www.midjourney.com'
+  },
+  {
+    id: 16,
+    name: 'ChatGPT',
+    category: '个人提升',
+    logo: 'https://fakeicon.com/chatgpt.png',
+    desc: 'OpenAI开发的对话式AI，支持多种语言和任务。',
+    fullDesc: 'ChatGPT 是由 OpenAI 开发的对话式 AI 模型，能够进行自然对话、回答问题、编写代码、创作内容等，支持多种语言。',
+    instructions: '1. 访问 chat.openai.com 注册\n2. 选择适合的模型（GPT-3.5 免费，GPT-4 付费）\n3. 清晰详细地描述问题或任务\n4. 使用系统提示词设定角色和风格\n5. 逐步对话，要求 AI 解释推理过程\n6. 验证重要信息的准确性\n7. 注意隐私保护，不分享敏感信息',
+    views: 99876,
+    stars: 598,
+    tags: ['ai-ml', 'general'],
+    url: 'https://chat.openai.com'
+  },
+  {
+    id: 17,
+    name: 'GitHub Copilot',
+    category: '个人提升',
+    logo: 'https://fakeicon.com/copilot.png',
+    desc: 'AI编程助手，在编辑器中提供智能代码补全和建议。',
+    fullDesc: 'GitHub Copilot 是 GitHub 和 OpenAI 联合开发的 AI 编程助手，能够在 VS Code 等编辑器中实时提供代码建议和补全。',
+    instructions: '1. 需要 GitHub 账户并订阅 Copilot\n2. 在支持的编辑器中安装 Copilot 扩展\n3. 登录 GitHub 账户授权\n4. 在代码文件中输入注释描述功能\n5. Copilot 会自动生成代码建议\n6. 按 Tab 接受建议，Ctrl+Enter 查看多个建议\n7. 可以训练 Copilot 学习个人编码风格',
+    views: 76543,
+    stars: 432,
+    tags: ['ai-ml', 'general'],
+    url: 'https://copilot.github.com'
+  },
+  {
+    id: 18,
+    name: 'Stable Diffusion',
+    category: '个人提升',
+    logo: 'https://fakeicon.com/stable-diffusion.png',
+    desc: '开源的文本到图像生成模型，可在本地部署。',
+    fullDesc: 'Stable Diffusion 是一款开源的文本到图像生成模型，可以在消费级显卡上运行，支持本地部署和自定义训练。',
+    instructions: '1. 硬件要求：NVIDIA GPU（至少 4GB 显存）\n2. 安装 Python 和 Git\n3. 克隆 Stable Diffusion WebUI 仓库\n4. 安装依赖：`pip install -r requirements.txt`\n5. 下载模型文件放入 models 文件夹\n6. 启动 WebUI：`python launch.py`\n7. 在浏览器中访问 localhost:7860 使用界面',
+    views: 54321,
+    stars: 387,
+    tags: ['open-source', 'ai-ml', 'general'],
+    url: 'https://stability.ai/stable-diffusion'
+  },
+  {
+    id: 19,
+    name: 'Notion AI',
+    category: '个人提升',
+    logo: 'https://fakeicon.com/notion-ai.png',
+    desc: '集成在Notion中的AI助手，帮助写作、总结和头脑风暴。',
+    fullDesc: 'Notion AI 是集成在 Notion 中的 AI 助手，能够帮助用户写作、总结文档、头脑风暴、翻译和优化内容。',
+    instructions: '1. 需要 Notion 账户并激活 AI 功能\n2. 在任意 Notion 页面中按空格键唤醒 AI\n3. 输入指令：写文章、总结文本、翻译语言等\n4. 选择 AI 生成的内容风格：正式、创意、简洁等\n5. 可以要求 AI 改进现有文本\n6. 使用 AI 进行头脑风暴会议记录\n7. 注意检查生成内容的准确性',
+    views: 43210,
+    stars: 298,
+    tags: ['ai-ml', 'general', 'community'],
+    url: 'https://www.notion.so/product/ai'
+  },
+  {
+    id: 20,
+    name: 'Grammarly',
+    category: '个人提升',
+    logo: 'https://fakeicon.com/grammarly.png',
+    desc: 'AI写作助手，检查语法错误、优化写作风格。',
+    fullDesc: 'Grammarly 是一款 AI 驱动的写作助手，能够实时检查语法错误、拼写错误、标点符号，并提供写作风格建议。',
+    instructions: '1. 注册 Grammarly 账户\n2. 安装浏览器扩展或桌面应用\n3. 在支持的网站或应用中开始写作\n4. Grammarly 会实时检查并显示错误\n5. 点击错误查看详细解释和修正建议\n6. 调整写作目标：受众、格式、语气等\n7. 使用高级功能：剽窃检查、词汇增强等',
+    views: 65432,
+    stars: 421,
+    tags: ['general'],
+    url: 'https://www.grammarly.com'
+  },
+  {
+    id: 21,
+    name: 'Runway ML',
+    category: '个人提升',
+    logo: 'https://fakeicon.com/runway.png',
+    desc: '创意个人提升集，支持视频编辑、图像生成和3D建模。',
+    fullDesc: 'Runway ML 是一个创意 AI 工具平台，提供视频编辑、图像生成、3D 建模等多种 AI 创意工具，适合创作者使用。',
+    instructions: '1. 注册 Runway ML 账户\n2. 选择工作区类型（个人或团队）\n3. 探索 AI 工具库：视频生成、图像编辑等\n4. 上传素材或使用文本生成内容\n5. 使用时间线编辑器进行视频编辑\n6. 导出作品：支持多种格式和分辨率\n7. 使用协作功能邀请团队成员',
+    views: 32109,
+    stars: 234,
+    tags: ['ai-ml', 'general'],
+    url: 'https://runwayml.com'
+  },
+  {
+    id: 22,
+    name: 'Jasper AI',
+    category: '个人提升',
+    logo: 'https://fakeicon.com/jasper.png',
+    desc: 'AI内容创作工具，帮助企业生成营销文案和博客文章。',
+    fullDesc: 'Jasper AI 是一款专注于内容创作的 AI 工具，能够生成营销文案、博客文章、社交媒体内容等，支持多种语言和语气。',
+    instructions: '1. 注册 Jasper AI 账户\n2. 选择模板：博客文章、广告文案、产品描述等\n3. 输入品牌信息和关键词\n4. 选择语气：专业、友好、幽默等\n5. 生成内容并编辑优化\n6. 使用 Boss Mode 进行长文写作\n7. 保存模板供重复使用',
+    views: 23456,
+    stars: 267,
+    tags: ['general', 'ai-ml'],
+    url: 'https://www.jasper.ai'
+  },
+  {
+    id: 23,
+    name: 'DALL-E 2',
+    category: '个人提升',
+    logo: 'https://fakeicon.com/dalle.png',
+    desc: 'OpenAI开发的图像生成AI，通过文本描述创建逼真图像。',
+    fullDesc: 'DALL-E 2 是 OpenAI 开发的图像生成 AI 系统，能够根据文本描述生成高质量、逼真的图像和艺术作品。',
+    instructions: '1. 注册 OpenAI 账户并购买积分\n2. 访问 labs.openai.com 或使用 API\n3. 输入详细、具体的文本描述\n4. 选择生成数量（1-10张）\n5. 等待生成结果\n6. 下载满意图像（支持 PNG 格式）\n7. 使用编辑功能修改生成图像',
+    views: 65432,
+    stars: 398,
+    tags: ['ai-ml', 'general'],
+    url: 'https://openai.com/dall-e-2'
+  },
+  {
+    id: 24,
+    name: 'Copy.ai',
+    category: '个人提升',
+    logo: 'https://fakeicon.com/copyai.png',
+    desc: 'AI写作助手，快速生成广告文案、产品描述等内容。',
+    fullDesc: 'Copy.ai 是一款 AI 写作助手，专门用于生成广告文案、产品描述、电子邮件、社交媒体内容等营销材料。',
+    instructions: '1. 注册 Copy.ai 账户\n2. 选择工具类型：广告文案、博客创意、社交媒体等\n3. 输入产品或服务信息\n4. 选择语气和语言\n5. 生成多个版本供选择\n6. 编辑和优化生成内容\n7. 保存到项目库中管理',
+    views: 19876,
+    stars: 189,
+    tags: ['general', 'ai-ml'],
+    url: 'https://www.copy.ai'
+  },
+  {
+    id: 25,
+    name: 'Claude AI',
+    category: '个人提升',
+    logo: 'https://fakeicon.com/claude.png',
+    desc: 'Anthropic开发的AI助手，以安全性和长上下文处理著称。',
+    fullDesc: 'Claude 是由 Anthropic 开发的 AI 助手，专注于安全、无害的对话，支持超长上下文窗口，适合处理长文档。',
+    instructions: '1. 访问 claude.ai 注册账户\n2. 选择 Claude 版本（免费或 Pro）\n3. 上传文档进行总结或分析\n4. 利用长上下文优势处理复杂任务\n5. 使用系统提示词设定行为准则\n6. 导出对话记录或生成内容\n7. 注意 Claude 的安全限制和内容政策',
+    views: 34567,
+    stars: 312,
+    tags: ['ai-ml', 'general'],
+    url: 'https://claude.ai'
+  },
+  {
+    id: 26,
+    name: 'Perplexity AI',
+    category: '个人提升',
+    logo: 'https://fakeicon.com/perplexity.png',
+    desc: 'AI搜索和问答工具，提供来源引用和实时信息。',
+    fullDesc: 'Perplexity AI 是一款结合搜索和对话的 AI 工具，能够回答复杂问题并提供信息来源引用，支持联网搜索实时信息。',
+    instructions: '1. 访问 perplexity.ai 使用网页版\n2. 输入问题，AI 会搜索并回答\n3. 查看回答中的引用来源\n4. 使用专注模式：学术、写作、代码等\n5. 开启联网搜索获取最新信息\n6. 保存对话记录到个人库\n7. 使用 Copilot 模式进行深度探索',
+    views: 28765,
+    stars: 245,
+    tags: ['ai-ml', 'general'],
+    url: 'https://perplexity.ai'
+  },
+  {
+    id: 27,
+    name: 'ElevenLabs',
+    category: '个人提升',
+    logo: 'https://fakeicon.com/elevenlabs.png',
+    desc: 'AI语音合成工具，生成自然、逼真的人类语音。',
+    fullDesc: 'ElevenLabs 是一款先进的 AI 语音合成工具，能够生成极其自然的人类语音，支持多种语言和声音风格。',
+    instructions: '1. 注册 ElevenLabs 账户\n2. 选择声音库中的声音或克隆自己的声音\n3. 输入文本或上传脚本\n4. 调整语音设置：稳定性、清晰度、风格夸张度\n5. 生成语音并预览\n6. 下载音频文件（MP3格式）\n7. 使用 API 集成到其他应用中',
+    views: 19876,
+    stars: 198,
+    tags: ['ai-ml', 'general'],
+    url: 'https://elevenlabs.io'
+  },
+  {
+    id: 28,
+    name: 'Gamma',
+    category: '个人提升',
+    logo: 'https://fakeicon.com/gamma.png',
+    desc: 'AI演示文稿工具，快速将想法转化为精美演示文稿。',
+    fullDesc: 'Gamma 是一款 AI 驱动的演示文稿工具，能够根据主题快速生成结构完整、设计精美的演示文稿，大幅提升制作效率。',
+    instructions: '1. 注册 Gamma 账户\n2. 输入演示文稿主题和大纲\n3. AI 生成初稿，包含内容和设计\n4. 使用编辑工具调整文本和布局\n5. 添加图片、图表等媒体元素\n6. 调整主题颜色和字体\n7. 分享链接或导出为 PDF/PPT',
+    views: 15432,
+    stars: 176,
+    tags: ['ai-ml', 'general', 'design'],
+    url: 'https://gamma.app'
+  },
+
+  // 论文阅读 (12个)
+  {
+    id: 29,
+    name: 'Zotero',
+    category: '论文阅读',
+    logo: 'https://fakeicon.com/zotero.png',
+    desc: '免费开源的文献管理工具，支持PDF标注和引文生成。',
+    fullDesc: 'Zotero 是一款免费开源的文献管理工具，能够帮助研究者收集、组织、引用和分享研究资料，支持浏览器插件和 Word 集成。',
+    instructions: '1. 下载并安装 Zotero 桌面应用\n2. 安装浏览器插件（Zotero Connector）\n3. 在学术网站上点击插件图标保存文献\n4. 在 Zotero 中组织文献到不同文件夹\n5. 使用 PDF 阅读器进行标注和高亮\n6. 在 Word 中使用插件插入引文和参考文献\n7. 使用同步功能在多设备间同步文献库',
+    views: 54321,
+    stars: 432,
+    tags: ['general', 'open-source', 'free'],
+    url: 'https://www.zotero.org'
+  },
+  {
+    id: 30,
+    name: 'Mendeley',
+    category: '论文阅读',
+    logo: 'https://fakeicon.com/mendeley.png',
+    desc: 'Elsevier旗下的文献管理工具，支持社交化功能。',
+    fullDesc: 'Mendeley 是 Elsevier 推出的文献管理工具，结合了文献管理、PDF 阅读、引文生成和学术社交功能。',
+    instructions: '1. 注册 Mendeley 账户\n2. 下载桌面应用和浏览器插件\n3. 导入 PDF 文献或从数据库抓取\n4. 使用内置 PDF 阅读器进行标注\n5. 创建文献库并添加标签\n6. 在 Word 中使用插件插入参考文献\n7. 发现相关研究：基于阅读历史的推荐',
+    views: 43210,
+    stars: 387,
+    tags: ['general'],
+    url: 'https://www.mendeley.com'
+  },
+  {
+    id: 31,
+    name: 'EndNote',
+    category: '论文阅读',
+    logo: 'https://fakeicon.com/endnote.png',
+    desc: '专业的文献管理软件，支持数千种引文格式。',
+    fullDesc: 'EndNote 是 Clarivate 开发的专业文献管理软件，提供强大的文献组织、引用和协作功能，支持超过 6000 种引文格式。',
+    instructions: '1. 购买并安装 EndNote 软件\n2. 创建新文献库\n3. 手动添加文献或从数据库导入\n4. 使用分组功能组织文献\n5. 在 Word 中使用 Cite While You Write 插件\n6. 选择需要的引文格式\n7. 使用在线版进行团队协作',
+    views: 32109,
+    stars: 298,
+    tags: ['general'],
+    url: 'https://endnote.com'
+  },
+  {
+    id: 32,
+    name: 'ReadCube Papers',
+    category: '论文阅读',
+    logo: 'https://fakeicon.com/readcube.png',
+    desc: '现代化的文献管理工具，提供增强PDF阅读体验。',
+    fullDesc: 'ReadCube Papers 是一款现代化的文献管理工具，专注于提供优秀的 PDF 阅读体验，支持智能推荐和笔记同步。',
+    instructions: '1. 注册 ReadCube Papers 账户\n2. 下载桌面和移动应用\n3. 导入文献库或从 PubMed 等搜索\n4. 使用增强 PDF 阅读器：智能标注、大纲视图\n5. 创建项目组织相关文献\n6. 使用推荐系统发现相关论文\n7. 同步阅读进度和笔记到所有设备',
+    views: 23456,
+    stars: 245,
+    tags: ['general'],
+    url: 'https://www.readcube.com/papers'
+  },
+  {
+    id: 33,
+    name: 'Connected Papers',
+    category: '论文阅读',
+    logo: 'https://fakeicon.com/connectedpapers.png',
+    desc: '可视化论文关联工具，发现相关领域的重要文献。',
+    fullDesc: 'Connected Papers 是一款可视化工具，通过输入一篇论文，生成该论文相关领域的视觉图谱，帮助研究者快速了解领域结构。',
+    instructions: '1. 访问 connectedpapers.com\n2. 输入论文 DOI、标题或 arXiv ID\n3. 等待系统生成关联图谱\n4. 查看相似论文、衍生论文和基础论文\n5. 点击节点查看论文详细信息\n6. 导出图谱或相关论文列表\n7. 使用 Prior Works 功能探索领域发展',
+    views: 19876,
+    stars: 198,
+    tags: ['general'],
+    url: 'https://www.connectedpapers.com'
+  },
+  {
+    id: 34,
+    name: 'Sci-Hub',
+    category: '论文阅读',
+    logo: 'https://fakeicon.com/scihub.png',
+    desc: '学术论文免费获取平台，绕过出版商的付费墙。',
+    fullDesc: 'Sci-Hub 是一个提供学术论文免费访问的网站，通过绕过出版商的付费墙，使研究人员能够获取付费墙后的学术论文。',
+    instructions: '1. 访问 Sci-Hub 最新可用域名\n2. 输入论文 DOI 或 PubMed ID\n3. 或直接粘贴论文 URL\n4. 点击 Open 按钮获取论文\n5. 下载 PDF 格式的论文全文\n6. 注意版权问题和使用合法性\n7. 支持学术开放获取运动',
+    views: 87654,
+    stars: 587,
+    tags: ['general', 'free'],
+    url: 'https://sci-hub.se'
+  },
+  {
+    id: 35,
+    name: 'ResearchGate',
+    category: '论文阅读',
+    logo: 'https://fakeicon.com/researchgate.png',
+    desc: '学术社交网络平台，分享研究成果和获取论文。',
+    fullDesc: 'ResearchGate 是一个面向科学家和研究人员的社交网络平台，可以分享论文、数据、方法，提问和解答研究问题。',
+    instructions: '1. 注册 ResearchGate 账户\n2. 完善个人资料和研究兴趣\n3. 上传自己的出版物\n4. 关注感兴趣的学者和研究机构\n5. 请求论文全文或直接下载\n6. 参与问答讨论和同行评议\n7. 查看论文阅读量和引用数据',
+    views: 65432,
+    stars: 432,
+    tags: ['general'],
+    url: 'https://www.researchgate.net'
+  },
+  {
+    id: 36,
+    name: 'Google Scholar',
+    category: '论文阅读',
+    logo: 'https://fakeicon.com/googlescholar.png',
+    desc: '谷歌学术搜索引擎，检索学术文献、专利和法庭意见。',
+    fullDesc: 'Google Scholar 是谷歌提供的免费学术搜索引擎，可以检索各种学术文献，包括论文、书籍、摘要、技术报告等。',
+    instructions: '1. 访问 scholar.google.com\n2. 输入关键词、作者名或论文标题搜索\n3. 使用高级搜索缩小范围\n4. 点击文章标题查看摘要和引用信息\n5. 查找全文链接（可能需付费或机构订阅）\n6. 使用"被引用次数"评估论文影响力\n7. 创建个人学术档案跟踪引用',
+    views: 98765,
+    stars: 567,
+    tags: ['general', 'free'],
+    url: 'https://scholar.google.com'
+  },
+  {
+    id: 37,
+    name: 'arXiv',
+    category: '论文阅读',
+    logo: 'https://fakeicon.com/arxiv.png',
+    desc: '预印本服务器，分享物理学、数学、计算机科学等领域的预印本论文。',
+    fullDesc: 'arXiv 是一个免费的预印本服务器，研究人员可以在论文正式发表前上传预印本，涵盖物理学、数学、计算机科学、经济学等多个领域。',
+    instructions: '1. 访问 arxiv.org\n2. 浏览不同学科分类\n3. 使用搜索功能查找特定论文\n4. 查看论文摘要和 PDF\n5. 订阅特定领域的 RSS 推送\n6. 上传自己的预印本论文\n7. 注意：arXiv 论文未经同行评议',
+    views: 76543,
+    stars: 489,
+    tags: ['general', 'free'],
+    url: 'https://arxiv.org'
+  },
+  {
+    id: 38,
+    name: 'PubMed',
+    category: '论文阅读',
+    logo: 'https://fakeicon.com/pubmed.png',
+    desc: '生物医学文献数据库，由美国国家医学图书馆维护。',
+    fullDesc: 'PubMed 是由美国国家医学图书馆（NLM）维护的免费生物医学文献数据库，收录了 MEDLINE 和其他生命科学期刊的文献。',
+    instructions: '1. 访问 pubmed.ncbi.nlm.nih.gov\n2. 使用布尔运算符（AND、OR、NOT）进行搜索\n3. 使用筛选器限制结果：日期、文章类型等\n4. 查看摘要和全文链接\n5. 使用 My NCBI 账户保存搜索和文献\n6. 设置电子邮件提醒获取新文献通知\n7. 查看相关文章和引用网络',
+    views: 87654,
+    stars: 512,
+    tags: ['general', 'free'],
+    url: 'https://pubmed.ncbi.nlm.nih.gov'
+  },
+  {
+    id: 39,
+    name: 'Semantic Scholar',
+    category: '论文阅读',
+    logo: 'https://fakeicon.com/semanticscholar.png',
+    desc: 'AI驱动的学术搜索引擎，提供论文理解和分析功能。',
+    fullDesc: 'Semantic Scholar 是由艾伦人工智能研究所开发的学术搜索引擎，利用 AI 技术理解论文内容，提供摘要、图表提取和影响力分析。',
+    instructions: '1. 访问 semanticscholar.org\n2. 搜索论文、作者或研究主题\n3. 查看 AI 生成的简明摘要\n4. 查看论文中的关键图表\n5. 分析论文的影响力和引用网络\n6. 创建文献库保存感兴趣论文\n7. 使用研究推荐功能发现相关文献',
+    views: 54321,
+    stars: 387,
+    tags: ['ai-ml', 'general'],
+    url: 'https://www.semanticscholar.org'
+  },
+  {
+    id: 40,
+    name: 'Overleaf',
+    category: '论文阅读',
+    logo: 'https://fakeicon.com/overleaf.png',
+    desc: '在线LaTeX编辑器，支持实时协作和期刊模板。',
+    fullDesc: 'Overleaf 是一个基于云的 LaTeX 编辑器，提供丰富的期刊模板，支持多人实时协作编辑学术论文和报告。',
+    instructions: '1. 注册 Overleaf 账户\n2. 选择模板或创建新项目\n3. 使用左侧编辑器编写 LaTeX 代码\n4. 实时预览右侧的 PDF 输出\n5. 邀请合作者共同编辑\n6. 使用聊天和评论功能讨论修改\n7. 导出为 PDF 或提交到期刊',
+    views: 43210,
+    stars: 345,
+    tags: ['general', 'web', 'community'],
+    url: 'https://www.overleaf.com'
+  }
+]
+
+export const mockComments = [
+  // ChatGPT (id: 8) 的评论 - 10条
+  {
+    id: 1001,
+    toolId: 8,
+    content: 'ChatGPT 真的改变了我的工作方式！作为一个程序员，它可以帮我调试代码、写文档，甚至重构代码。效率提升明显！',
+    userId: 101,
+    username: 'dev_master',
+    nickname: '编程大师',
+    avatar: 'https://fakeavatar.com/user101.jpg',
+    createdAt: '2024-01-15T10:30:00',
+    likes: 42,
+    isLiked: false
+  },
+  {
+    id: 1002,
+    toolId: 8,
+    content: '从 GPT-3.5 升级到 GPT-4，代码理解能力确实强了很多！特别是在处理复杂算法问题时，GPT-4 的准确性更高。',
+    userId: 102,
+    username: 'ai_researcher',
+    nickname: 'AI研究员',
+    avatar: 'https://fakeavatar.com/user102.jpg',
+    createdAt: '2024-01-14T14:20:00',
+    likes: 36,
+    isLiked: true
+  },
+  {
+    id: 1003,
+    toolId: 8,
+    content: '作为非英语母语者，ChatGPT 帮我润色英文邮件和文档，表达更专业了。商务沟通变得轻松多了！',
+    userId: 103,
+    username: 'business_writer',
+    nickname: '商务写手',
+    avatar: 'https://fakeavatar.com/user103.jpg',
+    createdAt: '2024-01-12T09:15:00',
+    likes: 28,
+    isLiked: false
+  },
+  {
+    id: 1004,
+    toolId: 8,
+    content: '学习新编程语言的好帮手！让 ChatGPT 用简单的例子解释概念，比看官方文档更易懂。👍',
+    userId: 104,
+    username: 'coding_newbie',
+    nickname: '编程新手',
+    avatar: 'https://fakeavatar.com/user104.jpg',
+    createdAt: '2024-01-10T16:45:00',
+    likes: 31,
+    isLiked: false
+  },
+  {
+    id: 1005,
+    toolId: 8,
+    content: 'Prompt Engineering 是关键！学会了写好的提示词后，ChatGPT 的输出质量大幅提升。推荐学习 prompt 技巧。',
+    userId: 105,
+    username: 'prompt_expert',
+    nickname: '提示词专家',
+    avatar: 'https://fakeavatar.com/user105.jpg',
+    createdAt: '2024-01-08T11:20:00',
+    likes: 45,
+    isLiked: true
+  },
+  {
+    id: 1006,
+    toolId: 8,
+    content: '订阅 ChatGPT Plus 很值得！优先访问、更快的响应速度，还有插件功能。工作流完全改变了。',
+    userId: 106,
+    username: 'tech_enthusiast',
+    nickname: '科技爱好者',
+    avatar: 'https://fakeavatar.com/user106.jpg',
+    createdAt: '2024-01-05T13:10:00',
+    likes: 39,
+    isLiked: false
+  },
+  {
+    id: 1007,
+    toolId: 8,
+    content: '帮我写博客文章、社交媒体内容，节省了大量时间。但需要仔细检查事实准确性，AI 有时会编造信息。',
+    userId: 107,
+    username: 'content_creator',
+    nickname: '内容创作者',
+    avatar: 'https://fakeavatar.com/user107.jpg',
+    createdAt: '2024-01-03T15:30:00',
+    likes: 22,
+    isLiked: true
+  },
+  {
+    id: 1008,
+    toolId: 8,
+    content: '代码调试神器！把错误信息贴给 ChatGPT，它能快速定位问题并给出解决方案。不过要注意别泄露敏感代码。',
+    userId: 108,
+    username: 'debug_master',
+    nickname: '调试大师',
+    avatar: 'https://fakeavatar.com/user108.jpg',
+    createdAt: '2024-01-02T10:15:00',
+    likes: 47,
+    isLiked: false
+  },
+  {
+    id: 1009,
+    toolId: 8,
+    content: '免费版已经很强大了，但高峰期经常需要排队。如果是重度用户，推荐升级到 Plus 版本。',
+    userId: 109,
+    username: 'power_user',
+    nickname: '重度用户',
+    avatar: 'https://fakeavatar.com/user109.jpg',
+    createdAt: '2023-12-28T09:45:00',
+    likes: 33,
+    isLiked: false
+  },
+  {
+    id: 1010,
+    toolId: 8,
+    content: 'ChatGPT 教我学习新概念，就像有个耐心的导师。特别是学习复杂理论时，让它用简单例子解释很有帮助。',
+    userId: 110,
+    username: 'lifelong_learner',
+    nickname: '终身学习者',
+    avatar: 'https://fakeavatar.com/user110.jpg',
+    createdAt: '2023-12-25T14:20:00',
+    likes: 29,
+    isLiked: true
+  }
+]
+// 根据工具Id获取相关评论的函数（模拟）
+export const getCommentsByToolId = (toolId) => {
+  // 过滤出指定工具ID的评论
+  const comments = mockComments.filter(comment => comment.toolId === parseInt(toolId))
+
+  return comments
+}
+
+// 添加评论的函数（模拟）
+export const addMockComment = (toolId, content) => {
+  const newId = Math.max(...mockComments.map(c => c.id)) + 1
+  const newComment = {
+    id: newId,
+    toolId: parseInt(toolId),
+    content: content,
+    userId: 1,
+    username: 'lycus',
+    nickname: '我的',
+    avatar: 'https://fakeavatar.com/user110.jpg',
+    createdAt: new Date().toISOString(),
+    likes: 0,
+    isLiked: false
+  }
+  mockComments.push(newComment)
+  return newComment
+}
+
+// 删除评论的函数（模拟）
+export const deleteMockComment = (commentId) => {
+  const index = mockComments.findIndex(c => c.id === parseInt(commentId))
+  if (index !== -1) {
+    mockComments.splice(index, 1)
+    return true
+  }
+  return false
+}
+
+// 点赞/取消点赞评论的函数（模拟）
+export const toggleLikeMockComment = (commentId) => {
+  const comment = mockComments.find(c => c.id === parseInt(commentId))
+  if (comment) {
+    const wasLiked = comment.isLiked
+    comment.isLiked = !wasLiked
+    comment.likes = wasLiked ? comment.likes - 1 : comment.likes + 1
+    return { success: true, isLiked: comment.isLiked, likes: comment.likes }
+  }
+  return { success: false }
+}

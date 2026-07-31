@@ -1,0 +1,6 @@
+.env
+.pip_ok
+.venv/
+__pycache__/
+data/chroma/
+data/lexical.sqlite3*

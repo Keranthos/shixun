@@ -9,3 +9,17 @@ softeng-platform-frontend/node_modules/
 softeng-platform-frontend/dist/
 .idea/
 .vscode/
+
+# build / binaries / local junk
+*.exe
+*.dll
+softeng-platform/**/tmp/
+softeng-platform/**/bin/
+softeng-platform-frontend/dist/
+agent/.env
+softeng-platform/**/.env
+*.log
+err.txt
+out.txt
+**/.git.nested.bak/
+softeng-platform/softeng-platform/.../

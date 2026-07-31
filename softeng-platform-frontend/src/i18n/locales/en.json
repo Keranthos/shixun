@@ -1,0 +1,33 @@
+{
+  "sidebar": {
+    "common": "Favorites",
+    "tools": "Tools",
+    "course": "Courses",
+    "projects": "Projects",
+    "dashboard": "Ops Dashboard",
+    "knowledge": "Knowledge Graph",
+    "telemetry": "Telemetry",
+    "longlist": "Long List",
+    "ragagent": "RAG Assistant",
+    "persona": "Session Persona",
+    "timeline": "Event Timeline",
+    "audit": "Review Center"
+  },
+  "home": {
+    "searchPlaceholder": "Search resources...",
+    "searchBtn": "Search",
+    "motivate": "Have a productive day!",
+    "sectionCommon": "Shortcuts",
+    "sectionTools": "Featured Tools",
+    "sectionCourse": "Courses",
+    "sectionProjects": "Projects",
+    "more": "More →",
+    "notif": "Notifications",
+    "notifEmpty": "No notifications",
+    "markRead": "Mark all read",
+    "lang": "Language",
+    "langZh": "简体中文",
+    "langEn": "English",
+    "engineLocal": "This site"
+  }
+}

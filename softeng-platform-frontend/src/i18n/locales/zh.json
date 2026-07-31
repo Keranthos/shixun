@@ -1,0 +1,29 @@
+{
+  "sidebar": {
+    "common": "常用",
+    "tools": "精选工具",
+    "course": "课程浏览",
+    "projects": "项目情况",
+    "dashboard": "数据概览",
+    "knowledge": "关联图谱",
+    "ragagent": "学习助手",
+    "audit": "审核中心"
+  },
+  "home": {
+    "searchPlaceholder": "搜索工具、课程或项目…",
+    "searchBtn": "搜索",
+    "motivate": "今天也要加油哦！",
+    "sectionCommon": "常用",
+    "sectionTools": "热门工具",
+    "sectionCourse": "热门课程",
+    "sectionProjects": "热门项目",
+    "more": "更多 →",
+    "notif": "通知",
+    "notifEmpty": "暂无通知",
+    "markRead": "全部已读",
+    "lang": "语言",
+    "langZh": "简体中文",
+    "langEn": "English",
+    "engineLocal": "本站"
+  }
+}
